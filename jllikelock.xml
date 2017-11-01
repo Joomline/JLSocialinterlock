@@ -144,7 +144,7 @@
                         name="twitter_screen_name"
                         type="text"
                         default=""
-                        label="Twitter Screen Name"
+                        label="Twitter Owner Name"
                         description=""
                         />
                 <field
