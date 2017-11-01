@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="plugin" group="system" method="upgrade">
+    <name>JL Social Interlock</name>
+    <author>JoomLine</author>
+    <creationDate>12-10-2017</creationDate>
+    <copyright>(C) 2013-2017 by Artem Zhukov, Vadim Kunicin, Arkadiy Sedelnikov(http://www.joomline.ru)</copyright>
+    <license>GNU/GPL: http://www.gnu.org/copyleft/gpl.html</license>
+    <authorEmail>sale@joomline.ru</authorEmail>
+    <authorUrl>https://joomline.ru</authorUrl>
+    <version>2.1.0</version>
+    <description>PLG_JLLIKELOCK_DESC</description>
+    <scriptfile>script.php</scriptfile>
+    <files>
+        <folder>elements</folder>
+        <folder>helpers</folder>
+        <folder>js</folder>
+        <folder>lib</folder>
+        <folder>models</folder>
+        <filename plugin="jllikelock">jllikelock.php</filename>
+        <filename>ajax-loader.gif</filename>
+        <filename>index.html</filename>
+    </files>
+    <languages folder="language">
+        <language tag="en-GB">en-GB/en-GB.plg_system_jllikelock.ini</language>
+        <language tag="ru-RU">ru-RU/ru-RU.plg_system_jllikelock.ini</language>
+    </languages>
+    <config>
+        <fields name="params">
+            <fieldset
+                    name="basic"
+                    >
+                <field
+                        name="typesget"
+                        type="list"
+                        default="0"
+                        label="PLG_JLLIKELOCK_TYPESGET_LABEL"
+                        description="PLG_JLLIKELOCK_TYPESGET_DESC"
+                        >
+                    <option value="0">PLG_JLLIKELOCK_FILEGET</option>
+                    <option value="1">PLG_JLLIKELOCK_CURL</option>
+                </field>
+                <field
+                        name="pathbase"
+                        type="list"
+                        default=""
+                        label="PLG_JLLIKELOCK_PRIORITE_DOMEN_LABEL"
+                        description="PLG_JLLIKELOCK_PRIORITE_DOMEN_DESC"
+                        >
+                    <option value="">PLG_JLLIKELOCK_WITHOUT_WWW</option>
+                    <option value="www.">PLG_JLLIKELOCK__WITH_WWW</option>
+                </field>
+                <!--<field
+                        name="klht"
+                        type="text"
+                        label="PLG_JLLIKELOCK_KLH_LABEL"
+                        default="0"
+                       description="PLG_JLLIKELOCK_KLH_DESC"
+                        />-->
+                <field
+                        name="addindextxt"
+                        type="radio"
+                        default="1"
+                        label="PLG_JLLIKELOCK_ENABLE_INDEXTXT_LABEL"
+                        description="PLG_JLLIKELOCK_ENABLE_INDEXTXT_DESC"
+                        >
+                    <option value="1">PLG_JLLIKELOCK_NO</option>
+                    <option value="0">PLG_JLLIKELOCK_YES</option>
+                </field>
+                <field
+                        name="hide_only_guest"
+                        type="radio"
+                        default="0"
+                        label="PLG_JLLIKELOCK_HIDE_ONLY_GUEST"
+                        description="PLG_JLLIKELOCK_HIDE_ONLY_GUEST_DESC"
+                        >
+                    <option value="0">PLG_JLLIKELOCK_NO</option>
+                    <option value="1">PLG_JLLIKELOCK_YES</option>
+                </field>
+            </fieldset>
+            <fieldset
+                    name="providers"
+                    label="PLG_JLLIKELOCK_PROVIDERS"
+                    >
+                <field
+                        name="addfacebook"
+                        type="radio"
+                        default="1"
+                        label="PLG_JLLIKELOCK_ENABLE_FC"
+                        description=""
+                        >
+                    <option value="0">PLG_JLLIKELOCK_NO</option>
+                    <option value="1">PLG_JLLIKELOCK_YES</option>
+                </field>
+                <field
+                        name="addvk"
+                        type="radio"
+                        default="1"
+                        label="PLG_JLLIKELOCK_ENABLE_VK"
+                        description=""
+                        >
+                    <option value="0">PLG_JLLIKELOCK_NO</option>
+                    <option value="1">PLG_JLLIKELOCK_YES</option>
+                </field>
+                <field
+                        name="addtw"
+                        type="radio"
+                        default="0"
+                        label="PLG_JLLIKELOCK_ENABLE_TW"
+                        description=""
+                        >
+                    <option value="0">PLG_JLLIKELOCK_NO</option>
+                    <option value="1">PLG_JLLIKELOCK_YES</option>
+                </field>
+                <field
+                        name="twitter_consumer_key"
+                        type="text"
+                        default=""
+                        label="Twitter Consumer Key"
+                        description=""
+                        />
+
+                <field
+                        name="twitter_consumer_secret"
+                        type="text"
+                        default=""
+                        label="Twitter Consumer Secret"
+                        description=""
+                        />
+                <field
+                        name="twitter_access_token"
+                        type="text"
+                        default=""
+                        label="Twitter Access Token"
+                        description=""
+                        />
+                <field
+                        name="twitter_access_token_secret"
+                        type="text"
+                        default=""
+                        label="Twitter Access Token Secret"
+                        description=""
+                        />
+                <field
+                        name="twitter_screen_name"
+                        type="text"
+                        default=""
+                        label="Twitter Screen Name"
+                        description=""
+                        />
+                <field
+                        name="callback_url"
+                        type="callbackurl"
+                        label="Twitter Callback URI"
+                        description="Callback URI"
+                        filter="unset"
+                        value="index.php?plg_system_jllikelock_twitter_auth=1"
+                        readonly="true"
+                        class="readonly"
+                />
+
+                <!--<field
+                        name="addgp"
+                        type="radio"
+                        default="1"
+                        label="PLG_JLLIKELOCK_ENABLE_GG"
+                        description=""
+                        >
+                    <option value="0">PLG_JLLIKELOCK_NO</option>
+                    <option value="1">PLG_JLLIKELOCK_YES</option>
+                </field>
+                <field-->
+                        <!--name="addok"-->
+                        <!--type="radio"-->
+                        <!--default="1"-->
+                        <!--label="PLG_JLLIKELOCK_ENABLE_OD"-->
+                        <!--description=""-->
+                        <!-->-->
+                    <!--<option value="0">PLG_JLLIKELOCK_NO</option>-->
+                    <!--<option value="1">PLG_JLLIKELOCK_YES</option>-->
+                <!--</field>-->
+                <!--<field-->
+                        <!--name="addmm"-->
+                        <!--type="radio"-->
+                        <!--default="1"-->
+                        <!--label="PLG_JLLIKELOCK_ENABLE_MM"-->
+                        <!--description=""-->
+                        <!--&gt;-->
+                    <!--<option value="0">PLG_JLLIKELOCK_NO</option>-->
+                    <!--<option value="1">PLG_JLLIKELOCK_YES</option>-->
+                <!--</field>-->
+            </fieldset>
+            <fieldset
+                    name="comcontentsettungs"
+                    label="PLG_JLLIKELOCK_SETTINGS_CONTENT"
+                    >
+                <field
+                        name="autoAdd"
+                        type="radio"
+                        default="0"
+                        label="PLG_JLLIKELOCK_AUTOADD_LABEL"
+                        description="PLG_JLLIKELOCK_AUTOADD_DESC"
+                        >
+                    <option value="0">PLG_JLLIKELOCK_NO</option>
+                    <option value="1">PLG_JLLIKELOCK_YES</option>
+                </field>
+                <field
+                        name="textlimits"
+                        type="text"
+                        label="PLG_JLLIKEKEYS_TEXT_LIMITS_LABEL"
+                        description="PLG_JLLIKEKEYS_TEXT_LIMITS_DESC"
+                        default="200"
+                        />
+                <field
+                        name="categories"
+                        type="category"
+                        extension='com_content'
+                        default="0"
+                        multiple="multiple"
+                        label="PLG_JLLIKELOCK_EXCLUDE_CATEGORY_LABEL"
+                        description="PLG_JLLIKELOCK_EXCLUDE_CATEGORY_DESC"
+                        />
+            </fieldset>
+            <fieldset
+                    name="k2settungs"
+                    label="PLG_JLLIKELOCK_K2_SETTINGS"
+                    addfieldpath="/plugins/system/jllikelock/elements/"
+                    >
+                <field
+                        name="k2autoAdd"
+                        type="radio"
+                        default="0"
+                        label="PLG_JLLIKELOCK_AUTOADD_LABEL"
+                        description="PLG_JLLIKELOCK_AUTOADD_DESC"
+                        >
+                    <option value="0">PLG_JLLIKELOCK_NO</option>
+                    <option value="1">PLG_JLLIKELOCK_YES</option>
+                </field>
+                <field
+                        name="k2textlimits"
+                        type="text"
+                        label="PLG_JLLIKEKEYS_TEXT_LIMITS_LABEL"
+                        description="PLG_JLLIKEKEYS_TEXT_LIMITS_DESC"
+                        default="200"
+                        />
+                <field
+                        name="k2categories"
+                        type="k2categories"
+                        default="0"
+                        multiple="multiple"
+                        label="PLG_JLLIKELOCK_EXCLUDE_CATEGORY_LABEL"
+                        description="PLG_JLLIKELOCK_EXCLUDE_CATEGORY_DESC"
+                        />
+                <field
+                        name="k2attach"
+                        type="list"
+                        default="fulltext"
+                        label="PLG_JLLIKELOCK_K2_ATTACH"
+                        description="PLG_JLLIKELOCK_K2_ATTACH_DESC"
+                        >
+                    <option value="introtext">introtext</option>
+                    <option value="fulltext">fulltext</option>
+                    <option value="text">text</option>
+                </field>
+            </fieldset>
+            <fieldset
+                    name="zoosettungs"
+                    label="PLG_JLLIKELOCK_ZOO_SETTINGS"
+                    addfieldpath="/plugins/system/jllikelock/elements/"
+                    >
+                <field
+                        name="zooautoAdd"
+                        type="radio"
+                        default="0"
+                        label="PLG_JLLIKELOCK_AUTOADD_LABEL"
+                        description="PLG_JLLIKELOCK_AUTOADD_DESC"
+                        >
+                    <option value="0">PLG_JLLIKELOCK_NO</option>
+                    <option value="1">PLG_JLLIKELOCK_YES</option>
+                </field>
+                <field
+                        name="zootextlimits"
+                        type="text"
+                        label="PLG_JLLIKEKEYS_TEXT_LIMITS_LABEL"
+                        description="PLG_JLLIKEKEYS_TEXT_LIMITS_DESC"
+                        default="200"
+                        />
+                <!--<field-->
+                        <!--name="zoocategories"-->
+                        <!--type="zoocategories"-->
+                        <!--default="0"-->
+                        <!--multiple="multiple"-->
+                        <!--label="PLG_JLLIKELOCK_EXCLUDE_CATEGORY_LABEL"-->
+                        <!--description="PLG_JLLIKELOCK_EXCLUDE_CATEGORY_DESC"-->
+                        <!--/>-->
+            </fieldset>
+            <fieldset
+                    name="easyblogsettings"
+                    label="PLG_JLLIKELOCK_SETTINGS_EASYBLOG"
+                    >
+                <field
+                        name="easyblog_autoAdd"
+                        type="radio"
+                        default="0"
+                        label="PLG_JLLIKELOCK_AUTOADD_LABEL"
+                        description="PLG_JLLIKELOCK_AUTOADD_DESC"
+                        >
+                    <option value="0">PLG_JLLIKELOCK_NO</option>
+                    <option value="1">PLG_JLLIKELOCK_YES</option>
+                </field>
+                <field
+                        name="easyblog_textlimits"
+                        type="text"
+                        label="PLG_JLLIKEKEYS_TEXT_LIMITS_LABEL"
+                        description="PLG_JLLIKEKEYS_TEXT_LIMITS_DESC"
+                        default="200"
+                        />
+                <field
+                        name="easyblog_categories"
+                        type="easyblogcategories"
+                        default="0"
+                        multiple="multiple"
+                        label="PLG_JLLIKELOCK_EXCLUDE_CATEGORY_LABEL"
+                        description="PLG_JLLIKELOCK_EXCLUDE_CATEGORY_DESC"
+                        />
+            </fieldset>
+            <fieldset
+                    name="virtsettings"
+                    label="PLG_JLLIKELOCK_SETTINGS_VIRT"
+                    >
+                <field
+                        name="virt_autoAdd"
+                        type="radio"
+                        default="0"
+                        label="PLG_JLLIKELOCK_AUTOADD_LABEL"
+                        description="PLG_JLLIKELOCK_AUTOADD_DESC"
+                        >
+                    <option value="0">PLG_JLLIKELOCK_NO</option>
+                    <option value="1">PLG_JLLIKELOCK_YES</option>
+                </field>
+                <field
+                        name="virt_textlimits"
+                        type="text"
+                        label="PLG_JLLIKEKEYS_TEXT_LIMITS_LABEL"
+                        description="PLG_JLLIKEKEYS_TEXT_LIMITS_DESC"
+                        default="200"
+                        />
+                <field
+                        name="virt_categories"
+                        type="virtcategories"
+                        default="0"
+                        multiple="multiple"
+                        label="PLG_JLLIKELOCK_EXCLUDE_CATEGORY_LABEL"
+                        description="PLG_JLLIKELOCK_EXCLUDE_CATEGORY_DESC"
+                        />
+            </fieldset>
+            <fieldset
+                    name="jssettings"
+                    label="PLG_JLLIKELOCK_SETTINGS_JS"
+                    >
+                <field
+                        name="js_autoAdd"
+                        type="radio"
+                        default="0"
+                        label="PLG_JLLIKELOCK_AUTOADD_LABEL"
+                        description="PLG_JLLIKELOCK_AUTOADD_DESC"
+                        >
+                    <option value="0">PLG_JLLIKELOCK_NO</option>
+                    <option value="1">PLG_JLLIKELOCK_YES</option>
+                </field>
+                <field
+                        name="js_textlimits"
+                        type="text"
+                        label="PLG_JLLIKEKEYS_TEXT_LIMITS_LABEL"
+                        description="PLG_JLLIKEKEYS_TEXT_LIMITS_DESC"
+                        default="200"
+                        />
+                <field
+                        name="js_categories"
+                        type="jscategories"
+                        default="0"
+                        multiple="multiple"
+                        label="PLG_JLLIKELOCK_EXCLUDE_CATEGORY_LABEL"
+                        description="PLG_JLLIKELOCK_EXCLUDE_CATEGORY_DESC"
+                        />
+            </fieldset>
+            <fieldset
+                    name="advanced"
+                    >
+                <field
+                        name="jqload"
+                        type="radio"
+                        default="1"
+                        label="PLG_JLLIKELOCK_JQLOAD_LABEL"
+                        description="PLG_JLLIKELOCK_JQLOAD_DESC"
+                        >
+                    <option value="1">PLG_JLLIKELOCK_YES</option>
+                    <option value="0">PLG_JLLIKELOCK_NO</option>
+                </field>
+                <field
+                        name="firsttxt"
+                        type="text"
+                        label="PLG_JLLIKEKEYS_TEXT_FIRST_LABEL"
+                        description="PLG_JLLIKEKEYS_TEXT_FIRST_DESC"
+                        default="PLG_JLLIKEKEYS_TEXT_FIRST_DEFAULT"
+                        />
+                <field
+                        name="bgcolor"
+                        type="text"
+                        label="PLG_JLLIKEKEYS_BG_COLOR"
+                        description="PLG_JLLIKEKEYS_BG_COLOR_DESC"
+                        default="#FFE3AB"
+                        />
+                <field
+                        name="colortxt"
+                        type="text"
+                        label="PLG_JLLIKEKEYS_TEXT_COLOR"
+                        description="PLG_JLLIKEKEYS_TEXT_COLOR_DESC"
+                        default="#010101"
+                        />
+                <field
+                        name="load_libs"
+                        type="radio"
+                        default="0"
+                        label="PLG_JLLIKELOCK_LOADLIBS_LABEL"
+                        description="PLG_JLLIKELOCK_LOADLIBS_DESC"
+                        >
+                    <option value="0">PLG_JLLIKELOCK_SEC1</option>
+                    <option value="1">PLG_JLLIKELOCK_SEC2</option>
+                </field>
+            </fieldset>
+
+        </fields>
+    </config>
+    <updateservers><server type="extension" priority="1" name="Joomline">https://joomline.net/index.php?option=com_ars&amp;view=update&amp;task=stream&amp;format=xml&amp;id=25&amp;dummy=extension.xml</server></updateservers>
+</extension>
